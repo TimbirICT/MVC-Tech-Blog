@@ -1,0 +1,20 @@
+<!-- views/partials/signup.handlebars -->
+
+<section class="signup-form">
+  <h2>Create an Account</h2>
+  <form action="/signup" method="POST">
+    <!-- Your signup form fields -->
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" required>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required>
+
+    <button type="submit">Sign Up</button>
+  </form>
+
+  <p>Already have an account? <a href="/login">Log in</a></p>
+</section>

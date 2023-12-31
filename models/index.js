@@ -1,15 +1,15 @@
 // models/index.js
 
 const User = require('./User');
-const Post = require('./Post');
-const Painting = require('./Painting');
+const Post = require('./Post'); // Import the Post model
 
-Post.hasMany(Painting, {
+// Update the associations
+Post.hasMany(User, {
   foreignKey: 'post_id',
 });
 
-Painting.belongsTo(Post, {
+User.belongsTo(Post, {
   foreignKey: 'post_id',
 });
 
-module.exports = { User, Post, Painting };
+module.exports = { User, Post };

@@ -1,10 +1,13 @@
 const router = require('express').Router();
+const bcrypt = require('bcrypt');
 const { User } = require('../models');
 
 // GET route for the login page
+// GET route for the login page
 router.get('/login', (req, res) => {
-  res.render('login'); // Update with your actual login template name
+  res.render('partials/login'); // Corrected from 'paritals' to 'partials'
 });
+
 
 // POST route for handling login form submissions
 router.post('/login', async (req, res) => {
@@ -17,12 +20,18 @@ router.post('/login', async (req, res) => {
 
     // If user not found or password is incorrect, redirect back to login
     if (!userData || !userData.checkPassword(password)) {
-      res.redirect('/login');
+      res.redirect('partials/login');
       return;
     }
 
+    // Set a session variable to indicate the user is logged in
+    req.session.save(() => {
+      req.session.user_id = userData.id;
+      req.session.username = userData.username;
+      req.session.loggedIn = true;
 
-    res.redirect('/'); // Change this to the actual route you want to redirect to
+      res.redirect('/'); // Change this to the actual route you want to redirect to
+    });
   } catch (err) {
     console.error(err);
     res.status(500).json(err);
