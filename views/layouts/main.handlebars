@@ -1,26 +1,32 @@
+<!-- views/layouts/main.handlebars -->
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Blog Posts</title>
+  <title>Blog</title>
+  <!-- Include your CSS files -->
   <link rel="stylesheet" type="text/css" href="/css/jass.css">
   <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 
 <body>
   <header>
-    <h1>Here are your blog post</h1>
+    <h1>My Blog</h1>
   </header>
   <nav>
     <a href="/">Home</a>
+    {{#if loggedIn}}
+      <a href="/dashboard">Dashboard</a>
+      <a href="/logout">Logout</a>
+    {{else}}
+      <a href="/login">Login</a>
+    {{/if}}
   </nav>
   <main>
-    <aside>
-      <h2>Enjoy the posts!</h2>
-    </aside>
-    <div class="gallery">
+    <div class="blog-posts">
       {{{body}}}
     </div>
   </main>

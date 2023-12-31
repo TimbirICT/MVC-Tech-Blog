@@ -1,64 +1,30 @@
+// controllers/home-routes.js
 const router = require('express').Router();
-const { Post, Painting } = require('../models');
+const { Post } = require('../models');
 
 // GET all posts for homepage
 router.get('/', async (req, res) => {
   try {
-    const dbPostData = await Post.findAll({
-      include: [
-        {
-          model: Painting,
-          attributes: ['filename', 'description'],
-        },
-      ],
-    });
+    const dbPostData = await Post.findAll();
 
-    const posts = dbPostData.map((post) =>
-      post.get({ plain: true })
-    );
+    const posts = dbPostData.map((post) => post.get({ plain: true }));
 
-    res.render('homepage', {
-      posts,
-    });
+    res.render('partials/homepage', { posts });
+    // Change 'homepage' to 'partials/homepage'
   } catch (err) {
     console.log(err);
     res.status(500).json(err);
   }
 });
 
-// GET one blog post
+// GET one post
 router.get('/post/:id', async (req, res) => {
   try {
-    const dbPostData = await Post.findByPk(req.params.id, {
-      include: [
-        {
-          model: Painting,
-          attributes: [
-            'id',
-            'title',
-            'artist',
-            'description',
-          ],
-        },
-      ],
-    });
+    const dbPostData = await Post.findByPk(req.params.id);
 
     const post = dbPostData.get({ plain: true });
-    res.render('post', { post });
-  } catch (err) {
-    console.log(err);
-    res.status(500).json(err);
-  }
-});
-
-// GET one painting
-router.get('/painting/:id', async (req, res) => {
-  try {
-    const dbPaintingData = await Painting.findByPk(req.params.id);
-
-    const painting = dbPaintingData.get({ plain: true });
-
-    res.render('painting', { painting });
+    res.render('partials/post', { post });
+    // Change 'post' to 'partials/post'
   } catch (err) {
     console.log(err);
     res.status(500).json(err);

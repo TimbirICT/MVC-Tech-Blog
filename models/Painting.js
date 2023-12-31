@@ -23,21 +23,11 @@ Painting.init(
       type: DataTypes.DATE,
       allowNull: false,
     },
-    filename: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
     description: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    gallery_id: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: 'gallery',
-        key: 'id',
-      },
-    },
+    // Remove gallery_id field
   },
   {
     sequelize,

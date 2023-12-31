@@ -1,13 +1,15 @@
+// models/index.js
+
 const User = require('./User');
 const Post = require('./Post');
 const Painting = require('./Painting');
 
 Post.hasMany(Painting, {
-  foreignKey: 'gallery_id',
+  foreignKey: 'post_id',
 });
 
 Painting.belongsTo(Post, {
-  foreignKey: 'Post_id',
+  foreignKey: 'post_id',
 });
 
 module.exports = { User, Post, Painting };
