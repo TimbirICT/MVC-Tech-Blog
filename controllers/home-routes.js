@@ -1,18 +1,31 @@
-
+const withAuth = require('../utils/auth');
+const { User } = require('../models');
 const router = require('express').Router();
 const { Post } = require('../models');
 
+
 // GET all posts for homepage
-router.get('/', async (req, res) => {
+router.get('/', withAuth, async (req, res) => {
   try {
-    const dbPostData = await Post.findAll();
+    // Get all posts and JOIN with user data
+    const postData = await Post.findAll({
+      include: [
+        {
+          model: User,
+          attributes: ['username'],
+        },
+      ],
+    });
 
-    const posts = dbPostData.map((post) => post.get({ plain: true }));
+    // Serialize data so the template can read it
+    const posts = postData.map((post) => post.get({ plain: true }));
 
-    res.render('partials/homepage', { posts });
-    
+    // Pass serialized data and session flag into template
+    res.render('partials/homepage', {
+      posts,
+      logged_in: req.session.logged_in,
+    });
   } catch (err) {
-    console.log(err);
     res.status(500).json(err);
   }
 });

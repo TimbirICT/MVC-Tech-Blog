@@ -16,7 +16,7 @@ Post.init(
       allowNull: false,
     },
     content: {
-      type: DataTypes.TEXT,  // Adjusted to TEXT type for longer blog post content
+      type: DataTypes.TEXT,
       allowNull: false,
     },
     created_at: {
@@ -24,12 +24,19 @@ Post.init(
       allowNull: false,
       defaultValue: DataTypes.NOW,
     },
+    user_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'user',
+        key: 'id',
+      },
+    },
   },
   {
     sequelize,
     freezeTableName: true,
     underscored: true,
-    modelName: 'post',  // Adjusted the model name to 'post'
+    modelName: 'post',
   }
 );
 

@@ -20,7 +20,8 @@ router.post('/login', async (req, res) => {
 
     // If user not found or password is incorrect, redirect back to login
     if (!userData || !userData.checkPassword(password)) {
-      res.redirect('partials/login');
+      console.log('Invalid login credentials');
+      res.redirect('/login');
       return;
     }
 
@@ -28,8 +29,9 @@ router.post('/login', async (req, res) => {
     req.session.save(() => {
       req.session.user_id = userData.id;
       req.session.username = userData.username;
-      req.session.loggedIn = true;
+      req.session.logged_in = true;
 
+      console.log('Login successful');
       res.redirect('/'); // Change this to the actual route you want to redirect to
     });
   } catch (err) {
@@ -37,5 +39,7 @@ router.post('/login', async (req, res) => {
     res.status(500).json(err);
   }
 });
+
+
 
 module.exports = router;

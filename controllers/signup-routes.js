@@ -10,20 +10,16 @@ router.get('/signup', (req, res) => {
 
 // POST route for handling signup form submissions
 router.post('/signup', async (req, res) => {
-    try {
-      const userData = await User.create(req.body);
-  
-      // Log a success message
-      console.log('User created successfully:', userData);
-  
-      // Send a response
-      res.json({ user: userData, message: 'Account created successfully!' });
-      res.redirect('/');
-    } catch (err) {
-      // Handle errors and send a response
-      console.error('Error creating user:', err);
-      res.status(500).json(err);
-    }
-  });
+  try {
+    const userData = await User.create(req.body);
+    // Redirect after sending the JSON response
+    res.redirect('/');
+  } catch (err) {
+    // Handle errors and send a response
+    console.error('Error creating user:', err);
+    res.status(500).json(err);
+  }
+});
+
 
   module.exports = router;
