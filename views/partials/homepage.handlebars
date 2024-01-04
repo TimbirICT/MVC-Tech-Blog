@@ -4,7 +4,25 @@
     <div>
       <h2>{{title}}</h2>
       <p>{{content}}</p>
-      <p>{{username}}</p> <!-- Use "username" directly from the post -->
+      <p>{{User.username}}</p>
+
+      {{! Display comments }}
+      <h3>Comments:</h3>
+      {{#each comments}}
+        <p><strong>{{name}}:</strong> {{content}}</p>
+      {{/each}}
+
+      {{! Add Comment Form }}
+      <form action="/comments/{{id}}" method="POST">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required />
+
+        <label for="content">Comment:</label>
+        <textarea id="content" name="content" rows="4" required></textarea>
+
+        <button type="submit">Add Comment</button>
+      </form>
+
     </div>
   {{/each}}
 {{else}}
